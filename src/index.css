@@ -14,3 +14,7 @@
   background-color: var(--primary-color);
   color: white;
 }
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
