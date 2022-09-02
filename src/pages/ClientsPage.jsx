@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Button } from '../components/Button'
 import { Client } from '../components/Client'
-import { getAllClients, createClient } from '../services'
-import axios from 'axios'
+import { getAllClients, createClient, deleteClient } from '../services'
 
 export const ClientsPage = () => {
   const [clients, setClients] = useState([])
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [gold, setGold] = useState(false)
+
+  console.log({ clients })
 
   useEffect(() => {
     getAllClients()
@@ -50,13 +51,12 @@ export const ClientsPage = () => {
   }
 
   const handleDelete = (id) => {
-    const url = `http://localhost:3000/api/customers/${id}`
-    axios.delete(url)
-      .then(response => {
-        const { data } = response
+    deleteClient(id)
+      .then(data => {
         const filter = clients.filter(client => client._id !== data.customer._id)
+        const filterRepeat = clients.filter(client => client._id === data.customer._id)
+        console.log({ filterRepeat })
         setClients(filter)
-        console.log(data.message)
       })
   }
 
